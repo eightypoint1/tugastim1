@@ -51,7 +51,7 @@ class HomeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+       //
     }
 
     /**
@@ -59,7 +59,23 @@ class HomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         $mahasiswa = Mahasiswa::find($id);
+
+        if(!$mahasiswa){
+            return response() ->json([
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+        $ValidateData = $request->validate([
+            'nim' => 'sometimes|string|max:255|unique:mahasiswa,nim,'. $id,
+            'nama' => 'sometimes|string|max:255',
+        ]);
+
+        $mahasiswa -> update($ValidateData);
+        return response() ->json([
+            'message' => 'Data berhasil diupdate',
+            'data' => $mahasiswa
+        ]);
     }
 
     /**

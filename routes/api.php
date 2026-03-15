@@ -13,3 +13,6 @@ Route::get('/mahasiswa/{id}', [HomeController::class, 'show']);   // get mahasis
 
 Route::post('/mahasiswa', [HomeController::class, 'store']);      // tambah data mahasiswa
 Route::delete('/mahasiswa/{id}', [HomeController::class, 'destroy']); // hapus data mahasiswa
+
+Route::put('/mahasiswa/{id}',[HomeController::class , 'update']);
+Route::patch('/mahasiswa/{id}',[HomeController::class, 'update']);
