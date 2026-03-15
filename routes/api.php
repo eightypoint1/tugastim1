@@ -8,11 +8,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/mahasiswa', [HomeController::class, 'index']);       // get all mahasiswa
-Route::get('/mahasiswa/{id}', [HomeController::class, 'show']);   // get mahasiswa by id
+Route::get('/mahasiswa/find', [HomeController::class, 'index']);       // get all mahasiswa
+Route::get('/mahasiswa/find/{id}', [HomeController::class, 'show']);   // get mahasiswa by id
 
-Route::post('/mahasiswa', [HomeController::class, 'store']);      // tambah data mahasiswa
-Route::delete('/mahasiswa/{id}', [HomeController::class, 'destroy']); // hapus data mahasiswa
+Route::post('/mahasiswa/store', [HomeController::class, 'store']);      // tambah data mahasiswa
+Route::delete('/mahasiswa/destroy/{id}', [HomeController::class, 'destroy']); // hapus data mahasiswa
 
-Route::put('/mahasiswa/{id}',[HomeController::class , 'update']);
-Route::patch('/mahasiswa/{id}',[HomeController::class, 'update']);
+Route::put('/mahasiswa/update/put/{id}',[HomeController::class , 'update']);
+Route::patch('/mahasiswa/update/patch/{id}',[HomeController::class, 'update']);
