@@ -16,12 +16,14 @@ class HomeController extends Controller
         return response()->json($mahasiswas);
     }
 
+    /**
+     * Display the specified resource.
+     */
     public function show(string $id)
     {
         $mahasiswas = Mahasiswa::find($id);
         return response()->json($mahasiswas);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -36,7 +38,12 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mahasiswa = Mahasiswa::create([
+            'nim' => $request->nim,
+            'nama' => $request->nama
+        ]);
+
+        return response()->json($mahasiswa);
     }
 
     /**
@@ -60,6 +67,18 @@ class HomeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $mahasiswa = Mahasiswa::find($id);
+
+        if (!$mahasiswa) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+
+        $mahasiswa->delete();
+
+        return response()->json([
+            'message' => 'Data berhasil dihapus'
+        ]);
     }
 }
