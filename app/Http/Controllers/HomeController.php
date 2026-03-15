@@ -59,23 +59,33 @@ class HomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-         $mahasiswa = Mahasiswa::find($id);
+        $mahasiswa = Mahasiswa::where('nim' , $id)->first();
 
         if(!$mahasiswa){
-            return response() ->json([
-                'message' => 'Data tidak ditemukan'
+            return response()->json([
+                'message' => 'data tidak ditemukan'
             ], 404);
         }
-        $ValidateData = $request->validate([
-            'nim' => 'sometimes|string|max:255|unique:mahasiswa,nim,'. $id,
+         try{
+            $validated = $request->validate([
+                'nim' => 'sometimes|string|max:15|unique:mahasiswa,nim,' . $id,
             'nama' => 'sometimes|string|max:255',
+            ]);
+        } catch(\Illuminate\Validation\ValidationException $th){
+            return response() -> json ([
+                "Message"=> "Validation Failed",
+                "errors" => $th->validator->errors()
+            ], 422);
+        }
+
+        $mahasiswa -> update($validated);
+
+        return response() ->json([
+            "message" => "Data Mahasiswa {$id} berhasil diupdate",
+            "data" => $mahasiswa
         ]);
 
-        $mahasiswa -> update($ValidateData);
-        return response() ->json([
-            'message' => 'Data berhasil diupdate',
-            'data' => $mahasiswa
-        ]);
+
     }
 
     /**
