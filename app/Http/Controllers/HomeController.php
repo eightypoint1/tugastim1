@@ -68,11 +68,11 @@ class HomeController extends Controller
         }
          try{
             $validated = $request->validate([
-                'nim' => 'sometimes|string|max:15|unique:mahasiswas,nim,' . $id,
+                'nim' => 'sometimes|string|max:15|unique:mahasiswas,nim,' . $mahasiswas->id,
                 'nama' => 'sometimes|string|max:255',
-                'mataKuliah.*.kode' => 'sometimes|required|regex:/^[A-Z]{3}[0-9]{5}$/',
-                'mataKuliah.*.nama' => 'sometimes|required|string|max:50',
-                'mataKuliah.*.sks' => 'sometimes|required|numeric|min:1|max:6',
+                'mata_kuliah.*.kode' => 'sometimes|required|regex:/^[A-Z]{3}[0-9]{5}$/',
+                'mata_kuliah.*.nama' => 'sometimes|required|string|max:50',
+                'mata_kuliah.*.sks' => 'sometimes|required|numeric|min:1|max:6',
             ]);
         } catch(\Illuminate\Validation\ValidationException $th){
             return response() -> json ([
