@@ -36,11 +36,11 @@ class HomeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $mahasiswa = Mahasiswa::create([
             'nim' => $request->nim,
-            'nama' => $request->nama
+            'nama' => $request->nama,
+            'mata_kuliah' => json_encode($request->mata_kuliah)
         ]);
 
         return response()->json($mahasiswa);
@@ -69,7 +69,7 @@ class HomeController extends Controller
          try{
             $validated = $request->validate([
                 'nim' => 'sometimes|string|max:15|unique:mahasiswas,nim,' . $id,
-            'nama' => 'sometimes|string|max:255',
+                'nama' => 'sometimes|string|max:255',
             ]);
         } catch(\Illuminate\Validation\ValidationException $th){
             return response() -> json ([
@@ -87,12 +87,7 @@ class HomeController extends Controller
 
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
+    public function destroy(string $id) {
         $mahasiswa = Mahasiswa::find($id);
 
         if (!$mahasiswa) {
