@@ -59,7 +59,7 @@ class HomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $mahasiswas = Mahasiswa::find($id);
+        $mahasiswas = Mahasiswa::where('nim', $id)->first();
 
         if(!$mahasiswas){
             return response()->json([
@@ -70,6 +70,9 @@ class HomeController extends Controller
             $validated = $request->validate([
                 'nim' => 'sometimes|string|max:15|unique:mahasiswas,nim,' . $id,
                 'nama' => 'sometimes|string|max:255',
+                'mataKuliah.*.kode' => 'sometimes|required|regex:/^[A-Z]{3}[0-9]{5}$/',
+                'mataKuliah.*.nama' => 'sometimes|required|string|max:50',
+                'mataKuliah.*.sks' => 'sometimes|required|numeric|min:1|max:6',
             ]);
         } catch(\Illuminate\Validation\ValidationException $th){
             return response() -> json ([
