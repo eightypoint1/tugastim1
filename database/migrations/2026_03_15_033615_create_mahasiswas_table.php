@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id();
             $table->string('nim', 15)->unique();
-            $table->string('nama', 255);
+            $table->string('nama', 50);
+            $table->json('mata_kuliah'); // untuk mata kuliah, ada kolom matakuliah.*.kode, matakuliah.*.nama, matakuliah.*.sks
         });
     }
 

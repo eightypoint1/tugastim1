@@ -59,16 +59,16 @@ class HomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $mahasiswa = Mahasiswa::where('nim' , $id)->first();
+        $mahasiswas = Mahasiswa::find($id);
 
-        if(!$mahasiswa){
+        if(!$mahasiswas){
             return response()->json([
                 'message' => 'data tidak ditemukan'
             ], 404);
         }
          try{
             $validated = $request->validate([
-                'nim' => 'sometimes|string|max:15|unique:mahasiswa,nim,' . $id,
+                'nim' => 'sometimes|string|max:15|unique:mahasiswas,nim,' . $id,
             'nama' => 'sometimes|string|max:255',
             ]);
         } catch(\Illuminate\Validation\ValidationException $th){
@@ -78,11 +78,11 @@ class HomeController extends Controller
             ], 422);
         }
 
-        $mahasiswa -> update($validated);
+        $mahasiswas -> update($validated);
 
         return response() ->json([
             "message" => "Data Mahasiswa {$id} berhasil diupdate",
-            "data" => $mahasiswa
+            "data" => $mahasiswas
         ]);
 
 
